@@ -1,0 +1,11 @@
+id,product_name,department_name,price,stock_quantity
+1,"MSI Laptop",electronics,1200.00,50
+2,"Razer Gaming Mosue",electronics,80.00,100
+3,"League of Legends T-Shirt",clothing,25.00,250
+4,"CS:GO Plushie",toys,20.00,150
+5,"Pokemon PJ Pants",clothing,30.00,120
+6,"Minecraft Pillow",home,12.00,50
+7,"Pokemon Gummies",food,8.00,45
+8,"World of Warcraft Crafting Paint",art,15.00,35
+9,"Spiderman Backpack",clothing,30.00,70
+10,"Ironman Bed Sheets",home,17.00,75
