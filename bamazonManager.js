@@ -1,6 +1,8 @@
 var mysql = require("mysql");
 var inquirer = require("inquirer");
 
+require("console.table");
+
 var connection = mysql.createConnection({
     host: "localhost",
 
@@ -11,7 +13,7 @@ var connection = mysql.createConnection({
     user: "root",
 
     // Your password
-    password: "Hearthstone5174",
+    password: "1234",
     database: "bamazon"
 });
 
@@ -61,9 +63,7 @@ function viewProducts() {
     connection.query("SELECT * FROM products", function (err, res) {
         if (err) throw err;
         // Log all results of the SELECT statement
-        for (let i = 0; i < res.length; i++) {
-            console.log("Id: " + res[i].id + ", Product Name: " + res[i].product_name + ", Price: $" + res[i].price + "\n");
-        }
+            console.table(res);
         viewCommands();
     });
 }
@@ -73,9 +73,7 @@ function viewLow() {
     connection.query("SELECT * FROM products WHERE stock_quantity <=?", [50], function (err, res) {
         if (err) throw err;
         // Log all results of the SELECT statement
-        for (let i = 0; i < res.length; i++) {
-            console.log("Id: " + res[i].id + ", Product Name: " + res[i].product_name + ", Stock: " + res[i].stock_quantity + " units\n");
-        }
+        console.table(res);
         viewCommands();
     });
 }
