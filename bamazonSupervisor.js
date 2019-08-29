@@ -12,7 +12,7 @@ var connection = mysql.createConnection({
     user: "root",
 
     // Your password
-    password: "1234",
+    password: "Hearthstone5174",
     database: "bamazon"
 });
 
@@ -54,8 +54,7 @@ var viewProductSales = function(){
         if (err) throw err;
         // Log all results of the SELECT statement
             res.forEach(row => {
-                row.total_costs = row.product_sales - row.over_head_costs;
-               
+                row.total_costs = row.product_sales - row.over_head_costs;               
             });
             console.table(res);
         displayCommands();
@@ -63,5 +62,39 @@ var viewProductSales = function(){
 };
 
 var newDepartment = function(){
-
+    inquirer
+    .prompt([
+        {
+            name: "department",
+            type: "input",
+            message: "What is the department you would like to submit?"
+        },
+        {
+            name: "costs",
+            type: "input",
+            message: "What are the over-head costs?",
+            validate: function (value) {
+                if (isNaN(value) === false) {
+                    return true;
+                }
+                return false;
+            }
+        }
+    ])
+    .then(function (answer) {
+        // when finished prompting, insert a new item into the db with that info
+        connection.query(
+            "INSERT INTO departments SET ?",
+            {
+                department_name: answer.department,
+                over_head_costs: answer.costs
+            },
+            function (err) {
+                if (err) throw err;
+                console.log("Your department was added successfully!");
+                // re-prompt the user for if they want to bid or post
+                displayCommands();
+            }
+        );
+    });
 };
