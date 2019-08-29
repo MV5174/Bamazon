@@ -49,6 +49,18 @@ var updateTable = function (quantity, id) {
         }
     )
 }
+var updateSales = function (sales, id){
+    connection.query("UPDATE products SET ? WHERE ?",    
+    [{
+        product_sales: sales
+    },
+    {
+        id: id
+    }
+], function (err){
+    if (err) throw err;
+})
+}
 //   The app should then prompt users with two messages.
 var askUser = function () {
     connection.query("SELECT * FROM products", function (err, res) {
@@ -88,7 +100,10 @@ var askUser = function () {
                     updateTable(newQuantity, parseInt(answer.buy));
                     console.log("Item(s) bought!!!\nNew Quantity: " + chosenItem.stock_quantity);
                     // Once the update goes through, show the customer the total cost of their purchase.
-                    console.log("\nTotal cost of purchase: $" + (chosenItem.price * parseInt(answer.quantity)));
+                    var productSales = (chosenItem.price * parseInt(answer.quantity));
+                    console.log("\nTotal cost of purchase: $" + productSales);
+                    var tableSales = chosenItem.product_sales + productSales;
+                    updateSales(tableSales, parseInt(answer.buy));
                 }
                 connection.end();
 
